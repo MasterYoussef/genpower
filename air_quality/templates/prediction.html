@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Solar Power</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/img3.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            text-align: center;
+            height: 100vh;
+        }
+
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(52, 73, 94, 0.8); /* Semi-transparent background */
+            padding: 10px 20px;
+            color: #ecf0f1;
+        }
+
+        .header-bar h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-bar i {
+            margin-right: 10px;
+        }
+
+        .button-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-bar a {
+            text-decoration: none;
+        }
+
+        .button-bar button {
+            color: #ecf0f1;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: rgba(44, 62, 90, 0.8); /* Semi-transparent background */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .button-bar button:hover {
+            background-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.75 ); /* Semi-transparent white background */
+            padding: 40px;
+            border-radius: 8px;
+            width: 50%;
+            margin: 50px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #000; /* Changed to black for better visibility */
+            font-size: 16px; /* Larger font size for better readability */
+            font-weight: bold; /* Making the font bold for clarity */
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <h1><i class="fas fa-sun"></i> Solar Power Generation</h1>
+        <div class="button-bar">
+            <a href="{% url 'home' %}"><button class="home"><i class="fas fa-home"></i> Home</button></a>
+            <a href="{% url 'upload' %}"><button class="upload"><i class="fas fa-upload"></i> Upload</button></a>
+            <a href="{% url 'prediction_view' %}"><button class="prediction"><i class="fas fa-sun"></i> Prediction</button></a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h1><i class="fas fa-cloud-sun"></i> Predict Solar Power</h1>
+        <form id="airQualityForm" method="post" action="{% url 'predict_air_quality_view' %}">
+            {% csrf_token %}
+            <label for="datetime">Date and Time:</label>
+            <input type="datetime-local" id="datetime" name="datetime" required>
+            <label for="Daily_Yield">Daily Yield:</label>
+            <input type="number" id="Daily_Yield" name="Daily_Yield" step="any" required>
+            <label for="Total_yield">Total yield:</label>
+            <input type="number" id="Total_yield" name="Total_yield" step="any" required>
+            <label for="ambient_temp">Ambient Temperature (°C):</label>
+            <input type="number" id="ambient_temp" name="ambient_temp" step="any" required>
+            <label for="module_temp">Module Temperature (°C):</label>
+            <input type="number" id="module_temp" name="module_temp" step="any" required>
+            <label for="irradiation">Irradiation (W/m²):</label>
+            <input type="number" id="irradiation" name="irradiation" step="any" required>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    <div id="result">
+        <!-- Results will be displayed here after prediction -->
+    </div>
+</body>
+</html>

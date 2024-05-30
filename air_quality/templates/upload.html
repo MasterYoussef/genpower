@@ -1,0 +1,119 @@
+<!-- airqualityapp/templates/airqualityapp/upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Power Generation - Upload</title>
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0; /* Supprimer la marge par défaut du body */
+    padding: 0; /* Supprimer le remplissage par défaut du body */
+    text-align: center;
+}
+
+.image-container {
+    margin-bottom: 20px;
+}
+
+img {
+    width: 100%;
+    height: 50vh; /* 50% de la hauteur de la fenêtre visible (viewport height) */
+    object-fit: cover; /* Ajustement de l'image pour couvrir la zone définie */
+    display: block;
+    margin: auto;
+}
+
+h1 {
+    color: #3498db;
+    font-size: 24px; /* Ajustement pour conserver l'uniformité avec le style précédent */
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Ombre portée sur le texte */
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    width: 300px;
+    box-sizing: border-box;
+    transition: border 0.3s ease-in-out; /* Animation douce pour la bordure */
+}
+
+input[type="file"]:hover {
+    border-color: #2980b9; /* Changement subtil de couleur au survol */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out; /* Animation douce pour le fond */
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.header-bar h1 {
+    margin: 0;
+    color: white; /* Couleur du texte */
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); /* Ombre portée sur le texte */
+}
+
+    </style>
+</head>
+<body>
+    {% load static %}
+    <!-- Image en haut de la page -->
+    <div class="image-container">
+        <img src="{% static 'images/home.jpg' %}" alt="Your Upload Image">
+    </div>
+
+    <h1>Upload CSV File</h1>
+    <form method="post" action="{% url 'preview_csv' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv_file" accept=".csv" required>
+        <button type="submit">Upload</button>
+    </form>
+    
+
+    <script>
+        function uploadFile() {
+            var formData = new FormData($('#uploadForm')[0]);
+
+            $.ajax({
+                url: $('#uploadForm').attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Redirection vers la page de prévisualisation
+                    window.location.href = "{% url 'preview_csv' %}";
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

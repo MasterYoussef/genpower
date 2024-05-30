@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Solar Power</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/img3.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            text-align: center;
+            height: 100vh;
+        }
+    
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(52, 73, 94, 0.8);
+            padding: 10px 20px;
+            color: #ecf0f1;
+        }
+    
+        .button-bar {
+            display: flex;
+            gap: 10px;
+        }
+    
+        .button-bar a {
+            text-decoration: none;
+        }
+    
+        .button-bar button {
+            color: #ecf0f1;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: rgba(44, 62, 80, 0.8);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .button-bar button:hover {
+            background-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    
+        .form-container {
+            
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+    
+        .model-button {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .result-container {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 5px;
+        }   
+    </style>
+    
+</head>
+<body>
+    <div class="header-bar">
+        <h1><i class="fas fa-cloud"></i> Solar Power Generation</h1>
+        <div class="button-bar">
+            <a href="{% url 'home' %}"><button class="home"><i class="fas fa-home"></i> Home</button></a>
+            <a href="{% url 'upload' %}"><button class="upload"><i class="fas fa-upload"></i> Upload</button></a>
+            <a href="{% url 'prediction_view' %}"><button class="prediction"><i class="fas fa-sun"></i> Prediction</button></a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <!-- Boutons pour chaque modèle avec des résultats intégrés directement -->
+        <button onclick="toggleResult('PLS')" class="model-button">PLS</button>
+        <div id="PLS-result" class="result-container">
+            <p>{{ prediction_result_pls }} (R²: {{ r2_score_pls }})</p>
+        </div>
+
+        <button onclick="toggleResult('DTR')" class="model-button">DTR</button>
+        <div id="DTR-result" class="result-container">
+            <p>{{ prediction_result_dtr }} (R²: {{ r2_score_dtr }})</p>
+        </div>
+
+        <button onclick="toggleResult('lr')" class="model-button">LR</button>
+        <div id="lr-result" class="result-container">
+            <p>{{ prediction_result_lr }} (R²: {{ r2_score_lr }})</p>
+        </div>
+
+        <button onclick="toggleResult('knn')" class="model-button">KNN</button>
+        <div id="knn-result" class="result-container">
+            <p>{{ prediction_result_knn }} (R²: {{ r2_score_knn }})</p>
+        </div>
+
+        <button onclick="toggleResult('rfr')" class="model-button">RFR</button>
+        <div id="rfr-result" class="result-container">
+            <p>{{ prediction_result_rfr }} (R²: {{ r2_score_rfr }})</p>
+        </div>
+
+        <button onclick="toggleResult('rnn')" class="model-button">RNN</button>
+        <div id="rnn-result" class="result-container">
+            <p>{{ prediction_result_rnn }} (R²: {{ r2_score_rnn }})</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleResult(modelName) {
+            var resultContainer = document.getElementById(modelName + '-result');
+            if (resultContainer.style.display === 'none' || resultContainer.style.display === '') {
+                resultContainer.style.display = 'block';
+            } else {
+                resultContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

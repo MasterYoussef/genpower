@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training and Test</title>
+
+    <style>
+        *
+        .slideshow-container {
+            width: 100%;
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Couleur de fond légère pour moins de fatigue visuelle */
+            color: #333; /* Couleur du texte plus douce */
+            text-align: center;
+        }
+
+        /* Style pour la ligne avec les boutons et le texte "Air Quality" */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #34495e; /* Couleur de fond plus sobre */
+            padding: 20px;
+            color: #ecf0f1;
+        }
+
+        .header-bar h1 {
+            margin: 0;
+            color: white; /* Couleur du texte */
+            margin: 0;
+            font-size: 2rem; /* Ajustement de la taille pour plus de visibilité */
+            font-weight: 700; /* Augmentation du poids pour un impact visuel plus fort */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre portée plus prononcée pour du relief */
+            font-family: 'Cursive', sans-monaco; /* Ombre portée sur le texte */
+            font-size: 28px;
+            margin-top: 20px;
+        }
+
+        .button-bar {
+            display: flex;
+            gap: 15px;
+        }
+
+        .button-bar button {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
+            background-color: #16a085; /* Couleur uniforme pour les boutons */
+            border-radius: 5px; /* Bords arrondis */
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .button-bar button.home {
+            background-color: rgba(52, 152, 219, 0.5); /* Couleur pour le bouton "Home" avec transparence */
+            border-radius: 8px; /* Bordure arrondie */
+        }
+
+        .button-bar button:hover {
+            background-color: #1abc9c; /* Changement de couleur au survol */
+            transform: translateY(-2px) scale(1.05); /* Effet de léger soulèvement et agrandissement */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Ombre pour un effet de profondeur */
+        }
+
+        .button-bar button.upload {
+            background-color: #e67e22;
+        }
+
+        .header-bar h1 {
+            margin: 0;
+            font-size: 2rem; /* Ajustement de la taille pour plus de visibilité */
+            font-weight: 700; /* Augmentation du poids pour un impact visuel plus fort */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre portée plus prononcée pour du relief */
+        }
+
+        .air-quality-image {
+            width: 100%;
+            height: auto;
+        }
+
+        #chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    {% load static %}
+    <div class="header-bar">
+        <h1><i class="fas fa-cloud"></i> Air Quality</h1>
+        <div class="button-bar">
+            <a href="{% url 'home' %}"><button class="home"><i class="fas fa-home"></i> Home</button></a>
+            <a href="{% url 'upload' %}"><button class="upload"><i class="fas fa-upload"></i> Upload</button></a>
+            <a href="{% url 'training_and_test' %}"><button class="train-test"><i class="fas fa-chart-line"></i> Chart</button></a>
+            <a href="{% url 'prediction_view' %}"><button class="upload"><i class="fas fa-chart-pie"></i> Prediction</button></a>
+        </div>
+    </div>
+
+    <div id="chart-container">
+        <h2 style="font-family: 'Cursive', sans-monaco;text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.379); font-size: 28px; margin-top: 10px; color: #0e1360;">Pourcentage d'existence des états de l'air</h2>
+
+
+        <img src="{{ image_url }}" alt="Pie Chart">
+    </div>
+</body>
+
+</html>
